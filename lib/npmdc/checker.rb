@@ -23,6 +23,7 @@ module Npmdc
       @dependencies_count = 0
       @missing_dependencies = Set.new
       @suspicious_dependencies = Set.new
+      @manager = options.fetch('manager', Npmdc.config.manager)
     end
 
     delegate %i[
@@ -31,10 +32,17 @@ module Npmdc
     ] => :formatter
 
     def call
-      types.each do |dep|
-        check_start_output(dep)
-        check_dependencies(package_data[dep])
-        check_finish_output
+      case @manager
+      when 'npm'
+        types.each do |dep|
+          check_start_output(dep)
+          check_dependencies(package_data[dep])
+          check_finish_output
+        end
+      when 'yarn'
+        check_yarn
+      else
+        raise(MissedManagerError, manager: @manager)
       end
 
       unless @missing_dependencies.empty?
@@ -127,6 +135,10 @@ module Npmdc
         @missing_dependencies << "#{dep}@#{version}"
         dep_output("#{dep} expected version '#{version}' but got '#{current_version}'", :failure)
       end
+    end
+
+    def check_yarn
+      puts 'yarn checking'
     end
   end
 end

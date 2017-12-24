@@ -16,6 +16,10 @@ module Npmdc
     method_option :format, aliases: [:f],
                            desc: 'Output format',
                            enum: Npmdc::Formatter::FORMATTERS.keys.map(&:to_s)
+    method_option :manager, aliases: [:m],
+                            desc: 'Package manager for choose',
+                            enum: Npmdc::Config::MANAGERS,
+                            default: Npmdc::Config::MANAGERS.first
 
     def check
       Npmdc.call(options)

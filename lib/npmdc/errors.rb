@@ -99,5 +99,14 @@ module Npmdc
         "Unknown '#{formatter}' formatter"
       end
     end
+
+    class MissedManagerError < CheckerError
+      define_critical!
+
+      def banner
+        manager = options.fetch(:manager)
+        "Unknown #{manager} package manager. You have to choose between #{Npmdc::Config::MANAGERS}"
+      end
+    end
   end
 end

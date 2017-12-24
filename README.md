@@ -43,6 +43,7 @@ YourApp::Application.configure do
   config.npmdc.types            = ["dependencies"]                  # `["dependencies", "devDependencies"]` by default
   config.npmdc.environments     = ["development"]                   # `development` only by default
   config.npmdc.abort_on_failure = true                              # 'false' by default
+  config.manager                = "npm"                             # 'npm' or 'yarn'. 'npm' by default
 end
 ```
 
@@ -64,6 +65,8 @@ _Options:_
                                # Possible values: dependencies, devDependencies
   f, [--format=FORMAT]         # Output format
                                # Possible values: progress, doc, short
+  m, [--manager=MANAGER]       # Which package manager to use
+                               # Possible values: npm, yarn. Default: npm
 ```
 ## Development
 

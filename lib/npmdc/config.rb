@@ -2,9 +2,10 @@ module Npmdc
   class Config
     DEPEPENDENCY_TYPES = %w[dependencies devDependencies].freeze
     ENVIRONMENTS = %w[development].freeze
+    MANAGERS = %w[npm yarn].freeze
 
     attr_accessor :color, :format, :output, :types, :environments,
-                  :abort_on_failure
+                  :abort_on_failure, :manager
     attr_writer :path
 
     def initialize
@@ -14,6 +15,7 @@ module Npmdc
       @types = DEPEPENDENCY_TYPES
       @environments = ENVIRONMENTS
       @abort_on_failure = false
+      @manager = MANAGERS.first
     end
 
     def path
